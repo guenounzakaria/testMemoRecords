@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form id="frm" action="/action_page.php">
+  <div id="calcul"></div>
+  réponse: <input id="reponse" type="number" name="fname" value=""> <br>
+  
+</form> 
+<button onclick="myFunction()">Envoyer</button>
+
+
+<div id= "tableau"></div>
+<div id="message"></div>
+
+
+
+
+
+<script>
+let réponses = [];
+var num1 = Math.floor(Math.random() * 10);
+var num2 = Math.floor(Math.random() * 10);
+var operation = ["+", "-", "x"][Math.floor(Math.random() * 3)];
+var la_réponse;
+if (operation == "+"){
+  la_réponse = num1+num2;
+}else if (operation == "-"){
+  la_réponse = num1-num2;
+}else{
+  la_réponse = num1*num2;
+}
+document.getElementById("calcul").innerHTML = num1.toString() + operation + num2.toString();
+function myFunction() {
+
+  
+  var x = document.getElementById("reponse");
+  var réponse = x.value;
+  réponses.push(réponse);
+  
+  if (réponses.length == 1 && réponse == la_réponse){
+      document.getElementById('message').innerHTML = "Félicitations bonne réponse";
+  }else if ((réponses.length <= 3 && réponse == la_réponse) || (réponses.length == 3 && réponse != la_réponse)) {
+   
+      var tableau = document.getElementsByTagName("body")[0];
+      tableau.innerHTML += "Voici un tableau de vos réponses"
+      var tbl = document.createElement("table");
+      var tblBody = document.createElement("tbody");
+      for(var i = 0; i < réponses.length; i++){
+        var row = document.createElement("tr");
+        var cell = document.createElement("td");
+        var cellText = document.createTextNode(réponses[i]);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        tblBody.appendChild(row);
+      }
+      tbl.appendChild(tblBody);
+      tableau.appendChild(tbl);
+      tbl.setAttribute("border", "1");
+ 
+    if (réponses.length <= 3 && réponse == la_réponse){
+      document.getElementById('message').innerHTML = "Bonne réponse, Vous pouvez faire mieux,  voici un tableau de vos réponses:";
+    }else if (réponses.length == 3 && réponse != la_réponse){
+      document.getElementById('message').innerHTML = "La bonne réponse est : " + la_réponse;
+    }
+  }
+} 
+</script>
+
+</body>
+</html>
